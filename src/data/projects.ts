@@ -45,7 +45,7 @@ export const PROJECTS: ProjectEntry[] = [
       'Music streaming app with search, library, playlists, listening statistics and themes, built as a Bun monorepo with a React + Vite frontend and a Hono + SQLite backend.',
     repo: null,
     githubUrl: null,
-    liveUrl: null,
+    liveUrl: 'https://drive.google.com/file/d/1gEJUfnWkqaqBJrUvk1XL6ENERBkx5n3H/view?usp=drive_link',
     techKeys: [
       'typescript',
       'bun',

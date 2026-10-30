@@ -16,7 +16,8 @@ Order and status of features. This view shows “what's done, what's next, and w
 
 ## Backlog / ideas 💡
 
-7. **006 · Glassmorphism Navbar** — Implement a fixed navigation bar with a `backdrop-blur` effect, an atmospheric gradient and a smooth-scroll system that responds to sections.
+7. **006 · Review and deploy:** - Review if something is not working and preparing the deployment for the app.
 8. **007 · Testing Setup** — Configure Vitest (per `constitution/tech-stack.md`) and add a root `tests/` folder with initial coverage. Not urgent yet, but needed before feature work grows further.
+9. **008 · Glassmorphism Navbar** — Implement a fixed navigation bar with a `backdrop-blur` effect, an atmospheric gradient and a smooth-scroll system that responds to sections.
 
 > Each new feature is created as `features/NNN-feature-name/` with `spec.md`, `plan.md`, and `tasks.md` before any code is written.

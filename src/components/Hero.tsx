@@ -18,7 +18,7 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg">
-          Software & Automation developer
+          Software, Automation & AI Developer
         </p>
 
         <div className="mt-10">
