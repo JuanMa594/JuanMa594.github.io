@@ -6,6 +6,7 @@ import { FiExternalLink, FiGitBranch, FiGithub, FiImage, FiLock, FiStar, FiUsers
 import type { FeaturedProject } from '../../lib/github';
 import { PROJECT_ICONS } from '../../data/projectIcons';
 import { TechBadge } from '../TechBadge';
+import { useLanguage } from '../LanguageContext';
 import { ProjectModal } from './ProjectModal';
 
 interface ProjectCardProps {
@@ -13,6 +14,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const { language, t } = useLanguage();
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const hasGallery = project.galleryImages.length > 0;
   const ProjectIcon = PROJECT_ICONS[project.slug];
@@ -60,18 +62,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       <p className="flex-1 text-sm leading-6 text-muted">
-        {project.description}
+        {project.description[language]}
       </p>
 
       {project.collaborationNote && (
         <p className="flex items-center gap-1.5 text-xs italic text-muted">
-          <FiUsers aria-hidden /> {project.collaborationNote}
+          <FiUsers aria-hidden /> {project.collaborationNote[language]}
         </p>
       )}
 
       {project.githubUrl === null && (
         <p className="flex items-center gap-1.5 text-xs italic text-muted">
-          <FiLock aria-hidden /> Private repository — get in touch and I&apos;ll share the link.
+          <FiLock aria-hidden /> {t.projects.privateRepo}
         </p>
       )}
 
@@ -83,7 +85,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             rel="noreferrer"
             className="flex items-center gap-1.5 rounded-full border border-ink/10 px-3 py-1.5 transition hover:border-accent/40 hover:text-accent"
           >
-            <FiGithub aria-hidden /> GitHub
+            <FiGithub aria-hidden /> {t.projects.github}
           </a>
         )}
 
@@ -94,7 +96,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             rel="noreferrer"
             className="flex items-center gap-1.5 rounded-full border border-ink/10 px-3 py-1.5 transition hover:border-accent/40 hover:text-accent"
           >
-            <FiExternalLink aria-hidden /> Live Demo
+            <FiExternalLink aria-hidden /> {t.projects.liveDemo}
           </a>
         )}
 
@@ -104,7 +106,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             onClick={() => setIsGalleryOpen(true)}
             className="flex items-center gap-1.5 rounded-full border border-ink/10 px-3 py-1.5 transition hover:border-accent/40 hover:text-accent"
           >
-            <FiImage aria-hidden /> Preview
+            <FiImage aria-hidden /> {t.projects.preview}
           </button>
         )}
       </div>

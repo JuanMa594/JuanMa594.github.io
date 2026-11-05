@@ -1,6 +1,7 @@
 import type { StaticImageData } from 'next/image';
 import { PROJECTS, type ProjectEntry } from '../data/projects';
 import { PROJECT_MEDIA, type GalleryImage } from '../data/projectMedia';
+import type { Localized } from '../types/i18n';
 
 const GITHUB_USERNAME = 'JuanMa594';
 
@@ -13,7 +14,7 @@ export interface RawGithubRepo {
 export interface FeaturedProject {
   slug: string;
   name: string;
-  description: string;
+  description: Localized<string>;
   /** Null when the repo is private. */
   githubUrl: string | null;
   liveUrl: string | null;
@@ -22,7 +23,7 @@ export interface FeaturedProject {
   stars?: number;
   forks?: number;
   logo?: StaticImageData;
-  collaborationNote?: string;
+  collaborationNote?: Localized<string>;
   galleryImages: GalleryImage[];
 }
 

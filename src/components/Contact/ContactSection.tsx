@@ -1,16 +1,21 @@
+'use client';
+
 import { DownloadCvButton } from '../DownloadCvButton';
 import { Reveal } from '../Experience/Reveal';
+import { useLanguage } from '../LanguageContext';
 import { ContactForm } from './ContactForm';
 import { ContactLinks } from './ContactLinks';
 
 export function ContactSection() {
+  const { t } = useLanguage();
+
   return (
     // min-h keeps the last section tall enough to reach the Header's active-section band at the bottom of the page.
     <section id="contact" className="relative min-h-[70vh] px-5 py-24">
       <div className="mx-auto max-w-5xl">
-        <h2 className="text-3xl font-semibold sm:text-4xl">Contact</h2>
+        <h2 className="text-3xl font-semibold sm:text-4xl">{t.contact.title}</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-          Got a project, an opportunity or just a question? Send me a message or reach out directly.
+          {t.contact.subtitle}
         </p>
 
         {/* grid-cols-1 is minmax(0, 1fr): without it the column grows to the longest unbreakable text (the LinkedIn URL) and overflows phones. */}

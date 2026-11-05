@@ -3,21 +3,24 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useTheme } from './ThemeContext';
+import { useLanguage } from './LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 import { AnimatedLogo } from './AnimatedLogo';
 
 const NAV_ITEMS = [
-  { name: 'Home', href: '#home' },
-  { name: 'About Me', href: '#about' },
-  { name: 'Projects/Skills', href: '#projects' },
-  { name: 'Exp.', href: '#exp' },
-  { name: 'Contact', href: '#contact' },
-];
+  { key: 'home', href: '#home' },
+  { key: 'about', href: '#about' },
+  { key: 'projects', href: '#projects' },
+  { key: 'exp', href: '#exp' },
+  { key: 'contact', href: '#contact' },
+] as const;
 
 // Sections without a nav item of their own that count as part of another one (Skills sits under "Projects/Skills").
 const SECTION_ALIASES: Record<string, string> = { skills: 'projects' };
 
 export function Header() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
@@ -62,7 +65,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 mx-auto w-full max-w-6xl px-5 py-6">
-      <nav className="flex items-center justify-between">
+      <nav className="flex items-center justify-between gap-3">
         <Link href="#home" className="flex items-center gap-2 group">
           <AnimatedLogo alt="JM" wrapperClassName="h-8 w-8 transition-transform group-hover:scale-110" gap={2} />
           <span className="text-xl font-bold tracking-tight text-ink">
@@ -76,7 +79,7 @@ export function Header() {
 
             return (
               <Link
-                key={item.name}
+                key={item.key}
                 href={item.href}
                 className={`relative rounded-full px-4 py-2 text-sm transition ${
                   isActive
@@ -84,7 +87,7 @@ export function Header() {
                     : 'text-muted hover:bg-ink/5 hover:text-ink'
                 }`}
               >
-                {item.name}
+                {t.nav[item.key]}
                 <span
                   className={`absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-accent transition-opacity ${
                     isActive ? 'opacity-100' : 'opacity-0'
@@ -95,13 +98,17 @@ export function Header() {
           })}
         </div>
 
-        <button
-          onClick={toggleTheme}
-          className="flex items-center gap-2 rounded-full border border-ink/10 bg-surface px-3 py-2 text-sm font-medium text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-accent/40"
-        >
-          <span className={`h-2.5 w-2.5 rounded-full ${theme === 'dark' ? 'bg-accent' : 'bg-amber-400'}`} />
-          {theme === 'dark' ? 'Dark' : 'Light'}
-        </button>
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <LanguageToggle />
+          <button
+            onClick={toggleTheme}
+            aria-label={t.theme.toggle}
+            className="flex items-center gap-2 rounded-full border border-ink/10 bg-surface px-2 py-2 text-xs font-medium text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-accent/40 sm:px-3 sm:text-sm"
+          >
+            <span className={`h-2.5 w-2.5 rounded-full ${theme === 'dark' ? 'bg-accent' : 'bg-amber-400'}`} />
+            {theme === 'dark' ? t.theme.dark : t.theme.light}
+          </button>
+        </div>
       </nav>
     </header>
   );

@@ -1,16 +1,27 @@
+import type { Localized } from '../types/i18n';
+
 export interface SkillCategory {
-  title: string;
+  id: string;
+  title: Localized<string>;
   keys: string[];
 }
 
 // `keys` map into TECH_META (see ./techIcons) for the icon + display label.
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: 'Programming Languages',
+    id: 'languages',
+    title: {
+      en: 'Programming Languages',
+      es: 'Lenguajes de programación',
+    },
     keys: ['python', 'sql', 'csharp', 'java', 'javascript', 'typescript'],
   },
   {
-    title: 'Frameworks & Libraries',
+    id: 'frameworks',
+    title: {
+      en: 'Frameworks & Libraries',
+      es: 'Frameworks y librerías',
+    },
     keys: [
       'nextjs',
       'react',
@@ -26,7 +37,11 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     ],
   },
   {
-    title: 'Tools & Automation',
+    id: 'tools',
+    title: {
+      en: 'Tools & Automation',
+      es: 'Herramientas y automatización',
+    },
     keys: [
       'docker',
       'n8n',

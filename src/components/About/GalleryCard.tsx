@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import type { GalleryItem } from '../../data/about';
+import { useLanguage } from '../LanguageContext';
 
 interface GalleryCardProps {
   item: GalleryItem;
 }
 
 export function GalleryCard({ item }: GalleryCardProps) {
+  const { language } = useLanguage();
   const [active, setActive] = useState(false);
 
   return (
@@ -19,7 +21,7 @@ export function GalleryCard({ item }: GalleryCardProps) {
     >
       <Image
         src={item.imageSrc}
-        alt={item.title}
+        alt={item.title[language]}
         placeholder="blur"
         fill
         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -33,9 +35,9 @@ export function GalleryCard({ item }: GalleryCardProps) {
           active ? 'opacity-100' : 'group-hover:opacity-100'
         }`}
       >
-        <span className="font-mono text-xs uppercase tracking-wide text-accent-light">{item.category}</span>
-        <span className="mt-1 text-sm font-semibold text-white">{item.title}</span>
-        <span className="mt-1 text-xs leading-5 text-white/70">{item.description}</span>
+        <span className="font-mono text-xs uppercase tracking-wide text-accent-light">{item.category[language]}</span>
+        <span className="mt-1 text-sm font-semibold text-white">{item.title[language]}</span>
+        <span className="mt-1 text-xs leading-5 text-white/70">{item.description[language]}</span>
       </div>
     </button>
   );

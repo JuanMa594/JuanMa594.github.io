@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import type { FeaturedProject } from '../../lib/github';
+import { useLanguage } from '../LanguageContext';
 
 interface ProjectModalProps {
   project: FeaturedProject;
@@ -12,9 +13,11 @@ interface ProjectModalProps {
 
 // Mounted only while the gallery is open (see ProjectCard), so state starts fresh each time.
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const { language, t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
   const images = project.galleryImages;
   const activeImage = images[activeIndex];
+  const activeCaption = activeImage?.caption[language];
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -27,7 +30,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onClose, images.length]);
 
-  if (images.length === 0) return null;
+  if (images.length === 0 || !activeImage) return null;
 
   return (
     <div
@@ -43,7 +46,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close preview"
+            aria-label={t.projects.modal.close}
             className="text-muted transition hover:text-accent"
           >
             <FiX size={18} aria-hidden />
@@ -53,7 +56,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div className="relative h-[65vh] max-h-[560px] w-full bg-background">
           <Image
             src={activeImage.src}
-            alt={activeImage.caption || `${project.name} screenshot ${activeIndex + 1}`}
+            alt={activeCaption || `${project.name} ${t.projects.modal.screenshot} ${activeIndex + 1}`}
             fill
             sizes="(min-width: 768px) 768px, 100vw"
             className="object-contain"
@@ -64,7 +67,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <button
                 type="button"
                 onClick={() => setActiveIndex((i) => (i - 1 + images.length) % images.length)}
-                aria-label="Previous screenshot"
+                aria-label={t.projects.modal.previous}
                 className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70"
               >
                 <FiChevronLeft aria-hidden />
@@ -72,7 +75,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <button
                 type="button"
                 onClick={() => setActiveIndex((i) => (i + 1) % images.length)}
-                aria-label="Next screenshot"
+                aria-label={t.projects.modal.next}
                 className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70"
               >
                 <FiChevronRight aria-hidden />
@@ -81,9 +84,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           )}
         </div>
 
-        {activeImage.caption && (
+        {activeCaption && (
           <p className="border-t border-ink/10 px-5 py-3 text-center text-sm text-muted">
-            {activeImage.caption}
+            {activeCaption}
           </p>
         )}
 

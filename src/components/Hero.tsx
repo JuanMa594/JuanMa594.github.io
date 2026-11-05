@@ -1,8 +1,13 @@
+'use client';
+
 import { Terminal } from './Terminal';
 import { HeroLogo } from './HeroLogo';
 import { DownloadCvButton } from './DownloadCvButton';
+import { useLanguage } from './LanguageContext';
 
 export function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="home"
@@ -10,15 +15,15 @@ export function Hero() {
     >
       <div>
         <p className="mb-4 font-mono text-sm text-accent">
-          {"// Software Developer"}
+          {t.hero.eyebrow}
         </p>
 
         <h1 className="max-w-3xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] sm:text-7xl lg:text-8xl">
-          I&apos;m <span className="text-ink">JuanMa<span className="text-accent">.</span></span>
+          {t.hero.greeting} <span className="text-ink">JuanMa<span className="text-accent">.</span></span>
         </h1>
 
         <p className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg">
-          Software, Automation & AI Developer
+          {t.hero.role}
         </p>
 
         <div className="mt-10">

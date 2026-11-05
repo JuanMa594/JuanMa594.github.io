@@ -6,8 +6,17 @@ This project is a modern personal portfolio website built with Next.js, React, T
 
 - Responsive layout for desktop and mobile
 - Sections for projects, experience, skills, and contact
+- Manual EN/ES language switcher with `localStorage` persistence and full content localization
 - Fast rendering and modern UI with Next.js
 - Easy deployment to Vercel or other Node.js-compatible hosting platforms
+
+## Localization
+
+English is the default language. The header's `EN` / `ES` toggle updates the interface and section content instantly and stores the choice in `localStorage` under the `language` key. The root `<html>` element is rendered with `translate="no"` (plus a Google `notranslate` meta tag) so browser translation tools cannot rewrite the animated DOM.
+
+- UI copy lives in `src/data/locales/en.ts` and `src/data/locales/es.ts`.
+- Section content (bio, projects, gallery, skills, experience and education) lives next to its data using the `Localized<T>` type from `src/types/i18n.ts`.
+- Terminal commands and help stay in English by design; only `-info` summaries follow the active language.
 
 ## Getting started
 

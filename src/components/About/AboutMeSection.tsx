@@ -1,11 +1,13 @@
 'use client';
 
 import { useTheme } from '../ThemeContext';
+import { useLanguage } from '../LanguageContext';
 import { ProfileCard } from './ProfileCard';
 import { PhotoGallery } from './PhotoGallery';
 
 export function AboutMeSection() {
   const { theme } = useTheme();
+  const { t } = useLanguage();
 
   return (
     <section
@@ -18,8 +20,8 @@ export function AboutMeSection() {
         <ProfileCard />
 
         <div>
-          <h3 className="text-xl font-semibold">A Few Things I Love</h3>
-          <p className="mt-2 text-sm opacity-60">Here are some of the things that bring me joy outside of coding.</p>
+          <h3 className="text-xl font-semibold">{t.about.galleryTitle}</h3>
+          <p className="mt-2 text-sm opacity-60">{t.about.gallerySubtitle}</p>
           <div className="mt-6">
             <PhotoGallery />
           </div>

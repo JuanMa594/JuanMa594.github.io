@@ -7,6 +7,8 @@ import { EDUCATION } from '../data/education';
 import { getTechMeta, normalizeTechKey } from '../data/techIcons';
 import type { useCosmetics } from './CosmeticsContext';
 import type { Theme } from './logoAssets';
+import type { Translation } from '../data/locales';
+import type { Language } from '../types/i18n';
 
 type Cosmetics = ReturnType<typeof useCosmetics>;
 
@@ -23,6 +25,8 @@ export interface CommandContext {
   scrollToSection: (id: string) => void;
   triggerMatrix: () => void;
   setProjectFilter: (filter: string) => void;
+  language: Language;
+  t: Translation;
 }
 
 export type CommandOutput = string | string[] | void;
@@ -41,12 +45,16 @@ export function parseInput(raw: string): ParsedCommand {
   return { name, flags, args };
 }
 
-function makeSectionCommand(id: string, description: string, infoLines: string[]): CommandDef {
+function makeSectionCommand(
+  id: string,
+  description: string,
+  infoLines: string[] | ((ctx: CommandContext) => string[])
+): CommandDef {
   return {
     description,
     run: (parsed, ctx) => {
       if (parsed.flags.includes('info') || parsed.flags.includes('top')) {
-        return infoLines;
+        return typeof infoLines === 'function' ? infoLines(ctx) : infoLines;
       }
       ctx.scrollToSection(id);
       return `Scrolling to #${id}...`;
@@ -92,23 +100,26 @@ export const COMMANDS: Record<string, CommandDef> = {
     },
   },
 
-  home: makeSectionCommand('home', '/home — scroll to the top', [
-    "JuanMa's portfolio — home base. Try /about, /skills or /exp for more.",
+  home: makeSectionCommand('home', '/home — scroll to the top', (ctx) => [ctx.t.terminal.homeInfo]),
+  about: makeSectionCommand('about', '/about [-info] — scroll to About Me, or print a summary', (ctx) => [
+    `${ctx.t.about.title}:`,
+    ABOUT_BIO.intro[ctx.language],
+    ...ABOUT_BIO.paragraphs[ctx.language],
   ]),
-  about: makeSectionCommand('about', '/about [-info] — scroll to About Me, or print a summary', [
-    'About Me:',
-    ABOUT_BIO.intro,
-    ...ABOUT_BIO.paragraphs,
-  ]),
-  skills: makeSectionCommand('skills', '/skills [-info] — scroll to Skills, or print a summary', [
-    'Skills:',
-    ...SKILL_CATEGORIES.map((cat) => `  ${cat.title.padEnd(24)} (${cat.keys.length})`),
+  skills: makeSectionCommand('skills', '/skills [-info] — scroll to Skills, or print a summary', (ctx) => [
+    `${ctx.t.skills.title}:`,
+    ...SKILL_CATEGORIES.map(
+      (cat) => `  ${cat.title[ctx.language].padEnd(24)} (${cat.keys.length})`
+    ),
   ]),
   projects: {
     description: '/projects [-info] [--filter=tag] — scroll to Projects, or list highlighted projects',
     run: (parsed, ctx) => {
       if (parsed.flags.includes('info')) {
-        return ["Top Projects — a few things I've built:", `Check ${CONTACT[0].value} in the meantime.`];
+        return [
+          `${ctx.t.projects.title} — ${ctx.t.projects.subtitle}`,
+          ctx.t.terminal.projectsInfo(CONTACT[0].value),
+        ];
       }
 
       const filterFlag = parsed.flags.find((flag) => flag.startsWith('filter='));
@@ -124,15 +135,20 @@ export const COMMANDS: Record<string, CommandDef> = {
       return 'Scrolling to #projects...';
     },
   },
-  contact: makeSectionCommand('contact', '/contact [-info] — scroll to Contact, or list how to reach me', [
-    'Contact:',
-    ...CONTACT.map((link) => `  ${link.label}: ${link.value}`),
+  contact: makeSectionCommand('contact', '/contact [-info] — scroll to Contact, or list how to reach me', (ctx) => [
+    `${ctx.t.contact.title}:`,
+    ...CONTACT.map((link) => `  ${ctx.t.contact.links[link.kind]}: ${link.value}`),
   ]),
-  exp: makeSectionCommand('exp', '/exp [-info] — scroll to Experience & Education, or print a summary', [
-    'Experience:',
-    ...EXPERIENCE.map((job) => `  ${job.role} — ${job.company} (${job.dateRange})`),
-    'Education:',
-    ...EDUCATION.map((study) => `  ${study.degree} — ${study.institution} (${study.dateRange})`),
+  exp: makeSectionCommand('exp', '/exp [-info] — scroll to Experience & Education, or print a summary', (ctx) => [
+    `${ctx.t.experience.experienceLabel}:`,
+    ...EXPERIENCE.map(
+      (job) => `  ${job.role[ctx.language]} — ${job.company} (${job.dateRange[ctx.language]})`
+    ),
+    `${ctx.t.experience.educationLabel}:`,
+    ...EDUCATION.map(
+      (study) =>
+        `  ${study.degree[ctx.language]} — ${study.institution} (${study.dateRange[ctx.language]})`
+    ),
   ]),
 
   whoami: {

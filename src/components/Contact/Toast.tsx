@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { FiAlertCircle, FiCheckCircle, FiX } from 'react-icons/fi';
+import { useLanguage } from '../LanguageContext';
 
 export interface ToastMessage {
   type: 'success' | 'error';
@@ -15,6 +16,7 @@ interface ToastProps extends ToastMessage {
 const AUTO_DISMISS_MS = 4000;
 
 export function Toast({ type, message, onClose }: ToastProps) {
+  const { t } = useLanguage();
   const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ export function Toast({ type, message, onClose }: ToastProps) {
       <button
         type="button"
         onClick={onClose}
-        aria-label="Dismiss notification"
+        aria-label={t.common.dismiss}
         className="-mr-1 shrink-0 rounded-full p-1 text-muted transition hover:text-ink"
       >
         <FiX aria-hidden />

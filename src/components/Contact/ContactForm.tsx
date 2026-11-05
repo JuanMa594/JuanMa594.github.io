@@ -7,10 +7,10 @@ import {
   type ContactField,
   type ContactPayload,
 } from '../../lib/contactValidation';
+import { useLanguage } from '../LanguageContext';
 import { Toast, type ToastMessage } from './Toast';
 
 const EMPTY_FORM: ContactPayload = { name: '', email: '', message: '', website: '' };
-const GENERIC_ERROR = "Couldn't send your message. Please try again later.";
 
 type FieldErrors = Partial<Record<ContactField, string>>;
 
@@ -18,6 +18,7 @@ const inputClasses =
   'w-full rounded-xl border border-ink/10 bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted/70 transition focus:border-accent/60 focus:outline-none aria-[invalid=true]:border-red-500/60';
 
 export function ContactForm() {
+  const { t } = useLanguage();
   const [form, setForm] = useState<ContactPayload>(EMPTY_FORM);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSending, setIsSending] = useState(false);
@@ -37,7 +38,12 @@ export function ContactForm() {
 
     const result = validateContact(form);
     if (!result.ok) {
-      setErrors(result.errors);
+      // The shared validator returns English strings for the API; the UI maps the failing fields to its own copy.
+      const localizedErrors: FieldErrors = {};
+      if (result.errors.name) localizedErrors.name = t.contact.errors.name;
+      if (result.errors.email) localizedErrors.email = t.contact.errors.email;
+      if (result.errors.message) localizedErrors.message = t.contact.errors.message;
+      setErrors(localizedErrors);
       return;
     }
 
@@ -48,17 +54,25 @@ export function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(result.data),
       });
-      const body = (await response.json().catch(() => null)) as { ok: boolean; error?: string } | null;
+      const body = (await response.json().catch(() => null)) as { ok: boolean } | null;
 
       if (response.ok && body?.ok) {
         setForm(EMPTY_FORM);
         setErrors({});
-        setToast({ type: 'success', message: "Message sent! I'll get back to you soon." });
+        setToast({ type: 'success', message: t.contact.success });
       } else {
-        setToast({ type: 'error', message: body?.error ?? GENERIC_ERROR });
+        const message =
+          response.status === 429
+            ? t.contact.errors.rateLimited
+            : response.status === 403
+              ? t.contact.errors.forbidden
+              : response.status === 400
+                ? t.contact.errors.invalidRequest
+                : t.contact.errors.generic;
+        setToast({ type: 'error', message });
       }
     } catch {
-      setToast({ type: 'error', message: GENERIC_ERROR });
+      setToast({ type: 'error', message: t.contact.errors.generic });
     } finally {
       setIsSending(false);
     }
@@ -73,7 +87,7 @@ export function ContactForm() {
       >
         <div className="flex flex-col gap-2">
           <label htmlFor="contact-name" className="text-sm font-medium">
-            Name
+            {t.contact.form.name}
           </label>
           <input
             id="contact-name"
@@ -96,7 +110,7 @@ export function ContactForm() {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="contact-email" className="text-sm font-medium">
-            Email
+            {t.contact.form.email}
           </label>
           <input
             id="contact-email"
@@ -119,7 +133,7 @@ export function ContactForm() {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="contact-message" className="text-sm font-medium">
-            Message
+            {t.contact.form.message}
           </label>
           <textarea
             id="contact-message"
@@ -144,7 +158,7 @@ export function ContactForm() {
 
         {/* Honeypot: hidden from people and assistive tech, bots tend to fill it. */}
         <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-          <label htmlFor="contact-website">Website</label>
+          <label htmlFor="contact-website">{t.contact.form.website}</label>
           <input
             id="contact-website"
             name="website"
@@ -161,7 +175,7 @@ export function ContactForm() {
           disabled={isSending}
           className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
-          {isSending ? 'Sending…' : 'Send message'}
+          {isSending ? t.contact.form.sending : t.contact.form.send}
         </button>
       </form>
 

@@ -2,6 +2,7 @@
 
 import type { FeaturedProject } from '../../lib/github';
 import { getTechMeta } from '../../data/techIcons';
+import { useLanguage } from '../LanguageContext';
 import { ProjectCard } from './ProjectCard';
 import { ProjectFilters } from './ProjectFilters';
 import { ALL_FILTER, useProjectsFilter } from './ProjectsFilterContext';
@@ -12,6 +13,7 @@ interface ProjectsGridProps {
 
 export function ProjectsGrid({ projects }: ProjectsGridProps) {
   const { activeFilter } = useProjectsFilter();
+  const { t } = useLanguage();
 
   // Only techs shared by 2+ projects become filter chips; each card lists its own full stack.
   const projectCountByTag = new Map<string, number>();
@@ -33,7 +35,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
       <ProjectFilters tags={tags} />
 
       {visibleProjects.length === 0 ? (
-        <p className="text-sm text-muted">No projects match this filter yet.</p>
+        <p className="text-sm text-muted">{t.projects.noResults}</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visibleProjects.map((project) => (

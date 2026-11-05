@@ -1,4 +1,5 @@
 import type { StaticImageData } from 'next/image';
+import type { Localized } from '../types/i18n';
 
 import RickYMortyLogo from '../assets/projects/RickYMorty/RickYMorty.jpg';
 import RickYMortySidebar from '../assets/projects/RickYMorty/Sidebar.png';
@@ -22,7 +23,7 @@ import StreamingSettings from '../assets/projects/Streaming/Settings.png';
 
 export interface GalleryImage {
   src: StaticImageData;
-  caption: string;
+  caption: Localized<string>;
 }
 
 export interface ProjectMedia {
@@ -30,7 +31,7 @@ export interface ProjectMedia {
   logo?: StaticImageData;
   gallery?: GalleryImage[];
   /** Shown on the card when the repo was built together with other people. */
-  collaborationNote?: string;
+  collaborationNote?: Localized<string>;
 }
 
 /**
@@ -40,32 +41,35 @@ export interface ProjectMedia {
 export const PROJECT_MEDIA: Record<string, ProjectMedia> = {
   Streaming: {
     gallery: [
-      { src: StreamingHome, caption: 'Home' },
-      { src: StreamingSearchAll, caption: 'Search — all results' },
-      { src: StreamingSearchSongs, caption: 'Search — songs' },
-      { src: StreamingLibrary, caption: 'Library' },
-      { src: StreamingPlaylist, caption: 'Playlist' },
-      { src: StreamingStatistics, caption: 'Listening statistics' },
-      { src: StreamingSettings, caption: 'Settings' },
+      { src: StreamingHome, caption: { en: 'Home', es: 'Inicio' } },
+      { src: StreamingSearchAll, caption: { en: 'Search — all results', es: 'Búsqueda — todos los resultados' } },
+      { src: StreamingSearchSongs, caption: { en: 'Search — songs', es: 'Búsqueda — canciones' } },
+      { src: StreamingLibrary, caption: { en: 'Library', es: 'Biblioteca' } },
+      { src: StreamingPlaylist, caption: { en: 'Playlist', es: 'Lista de reproducción' } },
+      { src: StreamingStatistics, caption: { en: 'Listening statistics', es: 'Estadísticas de escucha' } },
+      { src: StreamingSettings, caption: { en: 'Settings', es: 'Ajustes' } },
     ],
   },
   ProyectoRickYMorty: {
     logo: RickYMortyLogo,
     gallery: [
-      { src: RickYMortySidebar, caption: 'Sidebar navigation' },
-      { src: RickYMortyFilters, caption: 'Character filters' },
-      { src: RickYMortyCharactersGallery, caption: 'Characters gallery' },
+      { src: RickYMortySidebar, caption: { en: 'Sidebar navigation', es: 'Navegación lateral' } },
+      { src: RickYMortyFilters, caption: { en: 'Character filters', es: 'Filtros de personajes' } },
+      { src: RickYMortyCharactersGallery, caption: { en: 'Characters gallery', es: 'Galería de personajes' } },
     ],
   },
   'Hospital-JM-': {
-    collaborationNote: 'Collaborative university project, built together with classmates.',
+    collaborationNote: {
+      en: 'Collaborative university project, built together with classmates.',
+      es: 'Proyecto universitario colaborativo, desarrollado junto a compañeros de clase.',
+    },
     gallery: [
-      { src: HospitalLogin, caption: 'Login screen' },
-      { src: HospitalPrincipal, caption: 'Main dashboard' },
-      { src: HospitalInventory, caption: 'Inventory management' },
-      { src: HospitalAlerts, caption: 'Stock alerts' },
-      { src: HospitalSales, caption: 'Sales module' },
-      { src: HospitalSuppliers, caption: 'Suppliers management' },
+      { src: HospitalLogin, caption: { en: 'Login screen', es: 'Pantalla de inicio de sesión' } },
+      { src: HospitalPrincipal, caption: { en: 'Main dashboard', es: 'Panel principal' } },
+      { src: HospitalInventory, caption: { en: 'Inventory management', es: 'Gestión de inventario' } },
+      { src: HospitalAlerts, caption: { en: 'Stock alerts', es: 'Alertas de stock' } },
+      { src: HospitalSales, caption: { en: 'Sales module', es: 'Módulo de ventas' } },
+      { src: HospitalSuppliers, caption: { en: 'Suppliers management', es: 'Gestión de proveedores' } },
     ],
   },
 };

@@ -1,7 +1,10 @@
+'use client';
+
 import type { IconType } from 'react-icons';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { CONTACT, getContactHref, type ContactKind } from '../../data/contact';
+import { useLanguage } from '../LanguageContext';
 
 const ICONS: Record<ContactKind, IconType> = {
   github: FaGithub,
@@ -10,6 +13,8 @@ const ICONS: Record<ContactKind, IconType> = {
 };
 
 export function ContactLinks() {
+  const { t } = useLanguage();
+
   return (
     <ul className="flex flex-col gap-3">
       {CONTACT.map((link) => {
@@ -27,7 +32,7 @@ export function ContactLinks() {
                 <Icon size={18} aria-hidden />
               </span>
               <span className="min-w-0">
-                <span className="block text-sm font-medium">{link.label}</span>
+                <span className="block text-sm font-medium">{t.contact.links[link.kind]}</span>
                 <span className="block truncate text-sm text-muted">{link.value}</span>
               </span>
             </a>

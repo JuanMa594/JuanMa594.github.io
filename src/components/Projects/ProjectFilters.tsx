@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '../LanguageContext';
 import { ALL_FILTER, useProjectsFilter } from './ProjectsFilterContext';
 
 interface ProjectFiltersProps {
@@ -8,25 +9,26 @@ interface ProjectFiltersProps {
 
 export function ProjectFilters({ tags }: ProjectFiltersProps) {
   const { activeFilter, setActiveFilter } = useProjectsFilter();
-  const options = [ALL_FILTER, ...tags];
+  const { t } = useLanguage();
+  const options = [{ value: ALL_FILTER, label: t.projects.all }, ...tags.map((tag) => ({ value: tag, label: tag }))];
 
   return (
     <div className="flex flex-wrap gap-2">
-      {options.map((tag) => {
-        const isActive = activeFilter === tag;
+      {options.map((option) => {
+        const isActive = activeFilter === option.value;
 
         return (
           <button
-            key={tag}
+            key={option.value}
             type="button"
-            onClick={() => setActiveFilter(tag)}
+            onClick={() => setActiveFilter(option.value)}
             className={`rounded-full border px-4 py-1.5 font-mono text-xs transition ${
               isActive
                 ? 'border-accent/60 bg-accent/15 text-accent'
                 : 'border-ink/10 text-muted hover:border-accent/30 hover:text-ink'
             }`}
           >
-            {tag}
+            {option.label}
           </button>
         );
       })}

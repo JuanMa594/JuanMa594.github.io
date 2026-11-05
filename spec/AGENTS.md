@@ -1,7 +1,7 @@
 # Portfolio — Specification
 
 ## Overview
-Personal developer portfolio for JuanMa594, showcasing GitHub projects, experience, and skills. Built with React + TypeScript and deployed on Vercel. Use English Content evrytime.
+Personal developer portfolio for JuanMa594, showcasing GitHub projects, experience, and skills. Built with React + TypeScript and deployed on Vercel. English is the default language; Spanish is available through the manual EN/ES switcher.
 
 ---
 
@@ -82,11 +82,13 @@ portfolio
 │            └── tasks.md         ← tasks checklist
 │  ├──src/
 │    ├── components/
-│    │    ├── Navbar.tsx
+│    │    ├── Header.tsx          # sticky nav, theme button, EN/ES toggle
 │    │    ├── Hero.tsx
 │    │    ├── Terminal.tsx        # Interactive CLI: dispatches through terminalCommands.ts
 │    │    ├── terminalCommands.ts # Terminal command registry (parse, handlers, help)
 │    │    ├── ThemeContext.tsx    # dark/light theme provider
+│    │    ├── LanguageContext.tsx # EN/ES state, localStorage + document.lang sync
+│    │    ├── LanguageToggle.tsx  # compact EN/ES segmented control
 │    │    ├── CosmeticsContext.tsx # logo/font mode + accent shade easter-egg state
 │    │    ├── logoAssets.ts       # logo variant (mixed/pixel/serif) x theme lookup
 │    │    ├── About/
@@ -94,24 +96,38 @@ portfolio
 │    │    │  ├── ProfileCard.tsx     # bio, tag badges, profile photo
 │    │    │  ├── PhotoGallery.tsx    # responsive grid of GalleryCard
 │    │    │  └── GalleryCard.tsx     # hover/tap caption-overlay photo tile
-│    │    └── Projects/
-│    │    │  ├── Skills.tsx
+│    │    ├── Projects/
+│    │    │  ├── ProjectsSection.tsx        # server fetch (GitHub)
+│    │    │  ├── ProjectsSectionContent.tsx # client section wrapper (i18n)
 │    │    │  ├── ProjectCard.tsx
 │    │    │  ├── ProjectFilters.tsx
-│    │    │  └── ProjectsSection.tsx
-│    │    ├── Experience.tsx
-│    │    └── Contact.tsx
+│    │    │  ├── ProjectModal.tsx
+│    │    │  └── ProjectsGrid.tsx
+│    │    ├── Experience/
+│    │    │  └── ExperienceEducationSection.tsx  # experience + education timeline
+│    │    ├── Skills/
+│    │    │  └── SkillsSection.tsx
+│    │    └── Contact/
+│    │       ├── ContactSection.tsx
+│    │       ├── ContactLinks.tsx
+│    │       ├── ContactForm.tsx
+│    │       └── Toast.tsx
 │    ├── hooks/
 │    │    ├── useGitHubRepos.ts   # It will call to /api/github instead of api.github.com directamente
 │    │
 │    ├── types/
 │    │    ├── github.ts           # GitHub API response types
+│    │    └── i18n.ts             # Language + Localized<T> content type
 │    ├── data/
-│    │    ├── experience.ts       # static experience data
-│    │    ├── skills.ts           # static skills data
-│    │    ├── contact.ts            # GitHub/LinkedIn/email links (used by /contact)
+│    │    ├── experience.ts       # static experience data (Localized)
+│    │    ├── skills.ts           # static skills data (Localized)
+│    │    ├── contact.ts          # GitHub/LinkedIn/email links (used by /contact)
 │    │    ├── quotes.ts           # quote pool for /quote
-│    │    └── about.ts            # bio, tags & gallery items for the About Me section
+│    │    ├── about.ts            # bio, tags & gallery items for the About Me section
+│    │    └── locales/
+│    │       ├── en.ts            # English UI copy dictionary
+│    │       ├── es.ts            # Spanish UI copy dictionary
+│    │       └── index.ts         # DICTIONARIES lookup
 │    ├── app/api/contact/route.ts  # Next.js Route Handler: submits the contact form via Resend
 │    ├── App.tsx
 │    └── main.tsx
@@ -126,6 +142,13 @@ portfolio
 ## Routing
 - Single-page app, no router needed
 - Navigation via smooth scroll to section anchors
+
+## Internationalization (i18n)
+- English is the default; the header's `EN` / `ES` toggle switches the active language without a reload.
+- The choice persists in `localStorage` under the `language` key; `LanguageProvider` also keeps `document.documentElement.lang` in sync.
+- UI copy lives in `src/data/locales/en.ts` and `es.ts` (`DICTIONARIES` in `index.ts`). Section content uses `Localized<T>` from `src/types/i18n.ts` inside the existing `src/data` files, so ids, images, URLs and tech keys stay in one place.
+- `src/app/layout.tsx` renders `<html lang="en" translate="no">` and a Google `notranslate` meta tag to protect the animated DOM from browser translators.
+- Terminal commands, help and personality output stay in English by design; only `-info` summaries use the active language.
 ---
 
 ## Agent Core Directives & Execution Pipeline
@@ -172,12 +195,12 @@ Keynote: Constitution rules; so if a feature compete with `mission.md` or `tech-
 ## Out of Scope (v1)
 - Blog / articles section
 - Light mode toggle
-- Multi-language (i18n)
+- Automatic locale detection or languages beyond English/Spanish (manual EN/ES switcher only)
 - CMS integration
 
 ---
 
 ## Pending
 
-Nothing pending: Contact, CV download and Experience & Education shipped in features 004 and 005.
+Nothing pending: Contact, CV download, Experience & Education and the EN/ES language switcher shipped in features 004, 005 and 005.5.
 

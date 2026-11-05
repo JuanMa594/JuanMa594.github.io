@@ -7,30 +7,57 @@ import liceoLogo from '../assets/experience/liceo-antioqueno.jpg';
 export const EDUCATION: EducationItem[] = [
   {
     id: 'itm',
-    degree: 'Technologist in Software Development',
+    degree: {
+      en: 'Technologist in Software Development',
+      es: 'Tecnólogo en Desarrollo de Software',
+    },
     institution: 'Institución Universitaria ITM',
-    dateRange: '2023 – Present',
+    dateRange: {
+      en: '2023 – Present',
+      es: '2023 – Actualidad',
+    },
     type: 'higher_ed',
-    description: 'Currently studying.',
+    description: {
+      en: 'Currently studying.',
+      es: 'Actualmente en curso.',
+    },
     logo: itmLogo,
     current: true,
   },
   {
     id: 'sena',
-    degree: 'Systems Technician',
+    degree: {
+      en: 'Systems Technician',
+      es: 'Técnico en Sistemas',
+    },
     institution: 'SENA',
-    dateRange: '2021 – 2022',
+    dateRange: {
+      en: '2021 – 2022',
+      es: '2021 – 2022',
+    },
     type: 'technical',
-    description: 'Technical program completed alongside high school.',
+    description: {
+      en: 'Technical program completed alongside high school.',
+      es: 'Programa técnico completado junto con el bachillerato.',
+    },
     logo: senaLogo,
   },
   {
     id: 'liceo-antioqueno',
-    degree: 'High School Diploma',
+    degree: {
+      en: 'High School Diploma',
+      es: 'Bachiller Académico',
+    },
     institution: 'Liceo Antioqueño',
-    dateRange: '2017 – 2022',
+    dateRange: {
+      en: '2017 – 2022',
+      es: '2017 – 2022',
+    },
     type: 'high_school',
-    description: 'Grades 6 to 11.',
+    description: {
+      en: 'Grades 6 to 11.',
+      es: 'Grados 6 a 11.',
+    },
     logo: liceoLogo,
   },
 ];
