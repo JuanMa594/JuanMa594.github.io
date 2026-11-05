@@ -20,6 +20,7 @@
   - [x] Convert content data to `Localized<T>` (`about.ts`, `projects.ts`, `projectMedia.ts`, `skills.ts`, `experience.ts`, `education.ts`) and update `types/experience.ts` and `lib/github.ts`.
   - [x] Split `ProjectsSection` into the async server wrapper plus `ProjectsSectionContent` client wrapper.
   - [x] Localize contact validation/toast messages by mapping fields and HTTP status codes.
+  - [x] Make `DownloadCvButton` serve the English or Spanish PDF according to the active language (`CV_PATHS` in `src/data/contact.ts`).
   - [x] Keep terminal commands/help in English; localize only `-info` summaries via `CommandContext.language` and `CommandContext.t`.
   - [x] Test interactive elements (terminal, modals, filters, theme, logo/accent easter eggs) to ensure zero regression.
 

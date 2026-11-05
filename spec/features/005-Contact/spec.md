@@ -46,7 +46,7 @@ This folds in the three "Pending" items listed in `spec/AGENTS.md` (Contact sect
 ### 3.4 Download CV Button
 - One component (`DownloadCvButton`) reused in three places: Hero (next to the terminal), Experience & Education (under the heading) and Contact (left column).
 - Plain `<a href="/cv/<file>.pdf" download>`; no JavaScript needed.
-- The path lives in `CV_PATH` (`src/data/contact.ts`); setting it to `null` hides all three buttons. File: `public/cv/JuanMa-CV.pdf`.
+- The paths live in `CV_PATHS` (`src/data/contact.ts`); setting it to `null` hides all three buttons. Files: `public/cv/JuanMa-CV.pdf` (EN) and `public/cv/JM CV (Spanish).pdf` (ES).
 
 ### 3.5 Site Integrations
 - **Header:** new nav item `{ name: 'Contact', href: '#contact' }`. Because the section is the last one, it must be able to reach the observer's active band (`-40% / -50%` rootMargin), so the URL hash and the nav highlight switch to `#contact` at the bottom of the page.
@@ -79,7 +79,7 @@ None of them use the `NEXT_PUBLIC_` prefix.
 
 ## 5. Open Items
 1. ~~Real LinkedIn URL and email~~ — resolved: values taken from the CV (`jmusuga1122@gmail.com`, `linkedin.com/in/juan-manuel-usuga-galeano-00073437a`). The LinkedIn slug was read from an image (the PDF text layer has no link for it), so click it once to confirm it opens the right profile.
-2. ~~CV PDF not web-ready~~ — resolved: English CV published as `public/cv/JuanMa-CV.pdf`. Decision: WhatsApp (+57 310 7072333) is the only phone exposed, on purpose (calls can't reach it, which also limits spam). The CV still lists two references **by name and employer** (no phone numbers); that is the owner's call, but both people should be aware. The old Spanish CV, with all phones, remains in `origin/dev` git history.
+2. ~~CV PDF not web-ready~~ — resolved: English CV published as `public/cv/JuanMa-CV.pdf`. Decision: WhatsApp (+57 310 7072333) is the only phone exposed, on purpose (calls can't reach it, which also limits spam). The CV still lists two references **by name and employer** (no phone numbers); that is the owner's call, but both people should be aware. The old Spanish CV, with all phones, remains in `origin/dev` git history. Follow-up (005.5): a web-ready Spanish CV was published as `public/cv/JM CV (Spanish).pdf`; the buttons now serve it when the active language is ES.
 3. **Resend account:** create the API key and fill `.env.local` (still pending); optionally verify a domain to send from a custom address.
 
 ## 6. Out of Scope

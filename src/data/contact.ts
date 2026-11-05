@@ -1,3 +1,5 @@
+import type { Localized } from '../types/i18n';
+
 export type ContactKind = 'github' | 'linkedin' | 'email';
 
 export interface ContactLink {
@@ -17,5 +19,8 @@ export function getContactHref(link: ContactLink): string {
   return link.kind === 'email' ? `mailto:${link.value}` : link.value;
 }
 
-/** Downloadable CV in public/cv/. Set to null to hide every "Download CV" button. */
-export const CV_PATH: string | null = '/cv/JuanMa-CV.pdf';
+/** Downloadable CVs in public/cv/, one per language. Set to null to hide every "Download CV" button. */
+export const CV_PATHS: Localized<string> | null = {
+  en: '/cv/JuanMa-CV.pdf',
+  es: '/cv/JM CV (Spanish).pdf',
+};

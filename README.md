@@ -17,6 +17,7 @@ English is the default language. The header's `EN` / `ES` toggle updates the int
 - UI copy lives in `src/data/locales/en.ts` and `src/data/locales/es.ts`.
 - Section content (bio, projects, gallery, skills, experience and education) lives next to its data using the `Localized<T>` type from `src/types/i18n.ts`.
 - Terminal commands and help stay in English by design; only `-info` summaries follow the active language.
+- The `Download CV` buttons pick the PDF from the active language via `CV_PATHS` in `src/data/contact.ts`: `public/cv/JuanMa-CV.pdf` (EN) and `public/cv/JM CV (Spanish).pdf` (ES).
 
 ## Getting started
 

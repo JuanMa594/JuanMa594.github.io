@@ -121,7 +121,7 @@ portfolio
 │    ├── data/
 │    │    ├── experience.ts       # static experience data (Localized)
 │    │    ├── skills.ts           # static skills data (Localized)
-│    │    ├── contact.ts          # GitHub/LinkedIn/email links (used by /contact)
+│    │    ├── contact.ts          # GitHub/LinkedIn/email links + per-language CV paths
 │    │    ├── quotes.ts           # quote pool for /quote
 │    │    ├── about.ts            # bio, tags & gallery items for the About Me section
 │    │    └── locales/
@@ -149,6 +149,7 @@ portfolio
 - UI copy lives in `src/data/locales/en.ts` and `es.ts` (`DICTIONARIES` in `index.ts`). Section content uses `Localized<T>` from `src/types/i18n.ts` inside the existing `src/data` files, so ids, images, URLs and tech keys stay in one place.
 - `src/app/layout.tsx` renders `<html lang="en" translate="no">` and a Google `notranslate` meta tag to protect the animated DOM from browser translators.
 - Terminal commands, help and personality output stay in English by design; only `-info` summaries use the active language.
+- `DownloadCvButton` serves `CV_PATHS[language]` from `src/data/contact.ts`: `public/cv/JuanMa-CV.pdf` in English and `public/cv/JM CV (Spanish).pdf` in Spanish. Setting `CV_PATHS` to `null` hides all three buttons.
 ---
 
 ## Agent Core Directives & Execution Pipeline

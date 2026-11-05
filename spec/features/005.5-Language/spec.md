@@ -27,12 +27,14 @@ The `005.5-Language` feature introduces a manual language toggle (switching betw
 - Section content (bio, gallery, project descriptions/captions, skills categories, experience, education) uses `Localized<T>` from `src/types/i18n.ts` inside the existing `src/data` files.
 - `ProjectsSection` remains an async server component; `ProjectsSectionContent` is the client wrapper that consumes the language context.
 - Terminal commands and help remain in English; `-info` summaries use the active language.
+- `DownloadCvButton` selects `CV_PATHS[language]` from `src/data/contact.ts`, so the English and Spanish PDFs download according to the active language.
 
 ## 4. Acceptance Criteria
 - [x] A clean `EN/ES` toggle button is visible in the header next to the theme switcher.
 - [x] Clicking the toggle instantly updates supported text content across the site without requiring a hard page reload.
 - [x] Browser auto-translation is discouraged via `translate="no"` on `<html>` and the Google `notranslate` meta tag.
 - [x] The user's language choice is remembered via `localStorage`.
+- [x] The `Download CV` button serves the English PDF in EN and the Spanish PDF in ES.
 - [x] There are no side effects: theme, terminal, filters, modal, contact form and CV button keep working.
 
 ## 5. Implementation Notes / Corrections
@@ -41,6 +43,8 @@ The `005.5-Language` feature introduces a manual language toggle (switching betw
 - The plan proposed `src/components/Common/LanguageToggle.tsx`; the final path is `src/components/LanguageToggle.tsx` because there is no `Common/` folder.
 - `<LanguageProvider>` was added to `MainLayout.tsx` (the existing provider wrapper) instead of `app/layout.tsx`, which stays a server component with metadata.
 - Contact labels are no longer duplicated in `src/data/contact.ts`: the now-unused `ContactLink.label` field was removed and every label comes from `t.contact.links[link.kind]`.
+- `CV_PATH` was replaced by `CV_PATHS` (`Localized<string> | null`) when the Spanish CV was added. `DownloadCvButton` resolves the path per language and applies `encodeURI` for the filename with spaces and parentheses.
+- Verification found the English CV on disk as `Juanma-CV.pdf` while git tracked `JuanMa-CV.pdf`. Next resolves `public/` paths case-sensitively, so the link 404'd in local production builds. The working-tree filename was normalized to `JuanMa-CV.pdf` (git index unchanged), matching production.
 
 ## 6. Known Limitations
 - The first server-rendered paint is always English. The persisted language is applied in a `useEffect` after hydration, so Spanish visitors may see a brief English flash on reload. Avoiding it would require a blocking inline script or cookie-based SSR, which is out of scope for a static single-page site.

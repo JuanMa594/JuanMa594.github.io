@@ -16,6 +16,7 @@
    - `Hero`, `SkillsSection`, `ExperienceEducationSection`, `ContactSection` become client components.
    - `ProjectsSection` stays server-side; `ProjectsSectionContent` is the client wrapper that consumes `t`.
    - `ProfileCard`, `GalleryCard`, `ProjectCard`, `ProjectModal`, `ProjectFilters`, `ProjectsGrid`, `ExperienceCard`, `EducationCard`, `ContactForm`, `ContactLinks`, `Toast` and `DownloadCvButton` consume the active language.
+   - `DownloadCvButton` picks `CV_PATHS[language]` (EN: `public/cv/JuanMa-CV.pdf`, ES: `public/cv/JM CV (Spanish).pdf`).
    - Content data in `src/data/{about,projects,projectMedia,skills,experience,education}.ts` uses `Localized<T>` fields; structural fields (ids, images, URLs, tech keys) stay unchanged.
    - `src/lib/github.ts` passes localized descriptions/captions through `FeaturedProject`.
 4. **Terminal:** `Terminal.tsx` passes `language` and `t` to `CommandContext`; `terminalCommands.ts` uses them only in `-info` summaries. Commands and help remain English.
@@ -30,4 +31,5 @@
 - The provider lives in `MainLayout.tsx` to keep `app/layout.tsx` as a server component.
 - Content translations are co-located with their data via `Localized<T>` instead of being duplicated in the dictionaries; this keeps ids/slugs/links/images in one place and avoids breaking project filters or terminal lookups.
 - The shared contact validator still returns English strings for the API; the client maps failing fields and HTTP status codes to localized messages.
+- `CV_PATH` became `CV_PATHS` (`Localized<string> | null`) to support the Spanish CV; the component resolves the path from the active language and encodes it for the filename with spaces.
 - No new dependencies were added.
