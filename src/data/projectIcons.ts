@@ -3,6 +3,7 @@ import { FaFutbol, FaToriiGate } from 'react-icons/fa';
 import { MdMovie } from 'react-icons/md';
 import { PiHospitalFill } from 'react-icons/pi';
 import { SlEqualizer } from 'react-icons/sl';
+import { TbVirusSearch } from "react-icons/tb";
 
 /**
  * Header icons for projects without a logo image, keyed by project slug. Kept apart from
@@ -13,5 +14,6 @@ export const PROJECT_ICONS: Record<string, IconType> = {
   Streaming: SlEqualizer,
   FutStats: FaFutbol,
   'Hospital-JM-': PiHospitalFill,
+  'Vulnerabilidades_MalasPracticasFrecuentes': TbVirusSearch,
   LaHuesera: MdMovie,
 };

@@ -1,5 +1,5 @@
 import type { StaticImageData } from 'next/image';
-import { PROJECTS, type ProjectEntry } from '../data/projects';
+import { PROJECTS, type Collaborator, type ProjectEntry } from '../data/projects';
 import { PROJECT_MEDIA, type GalleryImage } from '../data/projectMedia';
 import type { Localized } from '../types/i18n';
 
@@ -24,6 +24,7 @@ export interface FeaturedProject {
   forks?: number;
   logo?: StaticImageData;
   collaborationNote?: Localized<string>;
+  collaborators?: Collaborator[];
   galleryImages: GalleryImage[];
 }
 
@@ -42,6 +43,7 @@ function toFeaturedProject(project: ProjectEntry, repo: RawGithubRepo | undefine
     forks: isPublic ? (repo?.forks_count ?? 0) : undefined,
     logo: media?.logo,
     collaborationNote: media?.collaborationNote,
+    collaborators: project.collaborators,
     galleryImages: media?.gallery ?? [],
   };
 }

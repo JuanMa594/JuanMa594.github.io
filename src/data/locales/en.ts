@@ -42,6 +42,7 @@ export const en = {
     liveDemo: 'Live Demo',
     preview: 'Preview',
     github: 'GitHub',
+    collaborators: 'Collaborators',
     modal: {
       close: 'Close preview',
       previous: 'Previous screenshot',

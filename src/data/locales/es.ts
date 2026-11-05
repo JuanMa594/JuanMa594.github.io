@@ -38,6 +38,7 @@ export const es: Translation = {
     liveDemo: 'Demo en vivo',
     preview: 'Vista previa',
     github: 'GitHub',
+    collaborators: 'Colaboradores',
     modal: {
       close: 'Cerrar vista previa',
       previous: 'Captura anterior',

@@ -1,5 +1,12 @@
 import type { Localized } from '../types/i18n';
 
+export interface Collaborator {
+  /** Display name, usually the GitHub handle. */
+  name: string;
+  /** Public GitHub profile. */
+  url: string;
+}
+
 export interface ProjectEntry {
   /** Stable id: keys PROJECT_MEDIA and PROJECT_ICONS. */
   slug: string;
@@ -11,6 +18,8 @@ export interface ProjectEntry {
   liveUrl: string | null;
   /** Keys of TECH_META: languages first, then frameworks, libraries and tools. */
   techKeys: string[];
+  /** People who built the project alongside the owner, linked from the card. */
+  collaborators?: Collaborator[];
 }
 
 /**
@@ -40,6 +49,9 @@ export const PROJECTS: ProjectEntry[] = [
       'nextintl',
       'tailwindcss',
       'bun',
+    ],
+    collaborators: [
+      { name: 'claude', url: 'https://github.com/claude' },
     ],
   },
   {
@@ -90,8 +102,25 @@ export const PROJECTS: ProjectEntry[] = [
     },
     repo: 'Hospital-JM-',
     githubUrl: 'https://github.com/JuanMa594/Hospital-JM-',
-    liveUrl: 'https://hospital-jm.vercel.app',
-    techKeys: ['python', 'csharp', 'html', 'css'],
+    //liveUrl: 'https://hospital-jm.vercel.app',
+    liveUrl: null,
+    techKeys: ['python', 'csharp', 'blazor', 'html', 'css'],
+  },
+  {
+    slug: 'Vulnerabilidades_MalasPracticasFrecuentes',
+    name: 'Vulnerabilidades Frecuentes',
+    description: {
+      en: 'A collaborative educational project designed to learn, using a sample application, how certain common programming vulnerabilities and errors manifest themselves and how to prevent them.',
+      es: 'Proyecto educativo colaborativo para aprender, con una aplicación de ejemplo, cómo se manifiestan algunas vulnerabilidades y errores comunes de programación y cómo prevenirlos.',
+    },
+    repo: 'Vulnerabilidades_MalasPracticasFrecuentes',
+    githubUrl: 'https://github.com/JuanMa594/Vulnerabilidades_MalasPracticasFrecuentes',
+    liveUrl: null,
+    techKeys: ['python', 'flask', 'postgresql', 'html', 'css', 'javascript', 'docker', 'uv'],
+    collaborators: [
+      { name: 'Navarrojuan212', url: 'https://github.com/Navarrojuan212' },
+      { name: 'claude', url: 'https://github.com/claude' },
+    ],
   },
   {
     slug: 'ProyectoRickYMorty',

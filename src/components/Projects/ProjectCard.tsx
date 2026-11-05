@@ -21,8 +21,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-ink/10 bg-surface p-6 transition hover:border-accent/40">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           {project.logo ? (
             <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-accent/20 bg-accent/10">
               <Image
@@ -38,11 +38,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
               {ProjectIcon ? <ProjectIcon size={20} aria-hidden /> : project.name.slice(0, 1).toUpperCase()}
             </span>
           )}
-          <h3 className="text-lg font-semibold">{project.name}</h3>
+          <h3 className="min-w-0 text-lg font-semibold leading-tight">{project.name}</h3>
         </div>
 
         {project.stars !== undefined && project.forks !== undefined && (
-          <div className="flex shrink-0 items-center gap-3 pt-1 text-xs text-muted">
+          <div className="flex shrink-0 items-center gap-3 text-xs text-muted">
             <span className="flex items-center gap-1">
               <FiStar aria-hidden /> {project.stars}
             </span>
@@ -69,6 +69,25 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <p className="flex items-center gap-1.5 text-xs italic text-muted">
           <FiUsers aria-hidden /> {project.collaborationNote[language]}
         </p>
+      )}
+
+      {project.collaborators && project.collaborators.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
+          <span className="flex items-center gap-1.5">
+            <FiUsers aria-hidden /> {t.projects.collaborators}:
+          </span>
+          {project.collaborators.map((collaborator) => (
+            <a
+              key={collaborator.url}
+              href={collaborator.url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1 rounded-full border border-ink/10 px-2 py-0.5 transition hover:border-accent/40 hover:text-accent"
+            >
+              <FiGithub aria-hidden /> {collaborator.name}
+            </a>
+          ))}
+        </div>
       )}
 
       {project.githubUrl === null && (
