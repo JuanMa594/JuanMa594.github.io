@@ -108,7 +108,7 @@ export const PROJECTS: ProjectEntry[] = [
   },
   {
     slug: 'Vulnerabilidades_MalasPracticasFrecuentes',
-    name: 'Vulnerabilidades Frecuentes',
+    name: 'Common Vulnerabilities',
     description: {
       en: 'A collaborative educational project designed to learn, using a sample application, how certain common programming vulnerabilities and errors manifest themselves and how to prevent them.',
       es: 'Proyecto educativo colaborativo para aprender, con una aplicación de ejemplo, cómo se manifiestan algunas vulnerabilidades y errores comunes de programación y cómo prevenirlos.',
