@@ -22,7 +22,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-ink/10 bg-surface p-6 transition hover:border-accent/40">
       <div className="flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           {project.logo ? (
             <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-accent/20 bg-accent/10">
               <Image
@@ -38,7 +38,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
               {ProjectIcon ? <ProjectIcon size={20} aria-hidden /> : project.name.slice(0, 1).toUpperCase()}
             </span>
           )}
-          <h3 className="min-w-0 text-lg font-semibold leading-tight">{project.name}</h3>
+          <h3
+            title={project.name}
+            className={`min-w-0 truncate font-semibold leading-tight ${
+              project.name.length > 16 ? 'text-base' : 'text-lg'
+            }`}
+          >
+            {project.name}
+          </h3>
         </div>
 
         {project.stars !== undefined && project.forks !== undefined && (

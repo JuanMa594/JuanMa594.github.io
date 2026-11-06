@@ -21,6 +21,14 @@ import StreamingPlaylist from '../assets/projects/Streaming/Playlist.png';
 import StreamingStatistics from '../assets/projects/Streaming/Statistycs.png';
 import StreamingSettings from '../assets/projects/Streaming/Settings.png';
 
+import InsecureVulHome from '../assets/projects/Vulnerabilidades/Sitio Inseguro (Menú principal).png';
+import InsecureVulList from '../assets/projects/Vulnerabilidades/Sitio Inseguro (Lista Vulnerabilidades).png';
+import InsecureVulExplan from '../assets/projects/Vulnerabilidades/Sitio Inseguro (Explicación Error).png';
+import InsecureVulFix from '../assets/projects/Vulnerabilidades/Sitio Inseguro (Arreglo).png';
+import SecureVulHome from '../assets/projects/Vulnerabilidades/Sitio Seguro (Menú principal).png';
+import SecureVulLists from '../assets/projects/Vulnerabilidades/Sitio Seguro (Lista Vulnerabilidades Solucionadas).png';
+import SecureVulExplan from '../assets/projects/Vulnerabilidades/Sitio Seguro (Explicación Error).png';
+
 export interface GalleryImage {
   src: StaticImageData;
   caption: Localized<string>;
@@ -72,4 +80,15 @@ export const PROJECT_MEDIA: Record<string, ProjectMedia> = {
       { src: HospitalSuppliers, caption: { en: 'Suppliers management', es: 'Gestión de proveedores' } },
     ],
   },
+  'Vulnerabilidades_MalasPracticasFrecuentes': {
+    gallery: [
+      { src: InsecureVulHome, caption: { en: 'Insecure Web Home', es: 'Inicio Sitio Inseguro' } },
+      { src: InsecureVulList, caption: { en: 'All Vulnerabilities on the Website', es: 'Todas las vulnerabilidades en el sitio web' } },
+      { src: InsecureVulExplan, caption: { en: 'Explanation — each vulnerability includes an in-depth explanation.', es: 'Explicación — cada vulnerabilidad incluye una explicación detallada.' } },
+      { src: InsecureVulFix, caption: { en: 'Recommendations', es: 'Recomendaciones' } },
+      { src: SecureVulHome, caption: { en: 'Secure Web Home', es: 'Inicio Sitio Seguro' } },
+      { src: SecureVulLists, caption: { en: 'All vulnerabilities fixed on the website', es: 'Todas las vulnerabilidades solucionadas en el sitio web' } },
+      { src: SecureVulExplan, caption: { en: 'Explanation — same as in the insecure version.', es: 'Explicación — la misma que en la versión insegura.' } },
+    ],
+  }, 
 };

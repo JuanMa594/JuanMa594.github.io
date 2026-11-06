@@ -36,7 +36,7 @@ export const PROJECTS: ProjectEntry[] = [
     },
     repo: 'Kyoto-website',
     githubUrl: 'https://github.com/JuanMa594/kyoto-website',
-    liveUrl: null,
+    liveUrl: 'https://drive.google.com/file/d/1GUjD0VgY5GyIGMzNRqeghz9XwDM7UPPm/view?usp=sharing',
     techKeys: [
       'typescript',
       'nextjs',
@@ -63,7 +63,7 @@ export const PROJECTS: ProjectEntry[] = [
     },
     repo: null,
     githubUrl: null,
-    liveUrl: 'https://drive.google.com/file/d/1gEJUfnWkqaqBJrUvk1XL6ENERBkx5n3H/view?usp=drive_link',
+    liveUrl: 'https://drive.google.com/file/d/1gEJUfnWkqaqBJrUvk1XL6ENERBkx5n3H/view?usp=sharing',
     techKeys: [
       'typescript',
       'bun',
