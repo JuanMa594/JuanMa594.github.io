@@ -1,5 +1,7 @@
 # Specification: 005-Contact Section
 
+> **Update (006-Deployment):** the project now builds as a static export for GitHub Pages, so the Resend route handler described in §3.3 and the server variables in §3.6 were replaced by a Formspree endpoint (`NEXT_PUBLIC_CONTACT_FORM_ENDPOINT`). The rest of this document describes the original Vercel implementation and remains as historical context.
+
 ## 1. Overview
 The `005-Contact` feature adds the last section of the page, **Contact**, so a recruiter or developer can reach JuanMa594 without leaving the site. It combines:
 - **Contact links** to GitHub, LinkedIn and email (`mailto:`), sourced from `src/data/contact.ts`.

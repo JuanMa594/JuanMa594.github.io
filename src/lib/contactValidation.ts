@@ -26,7 +26,7 @@ function asTrimmedString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
-/** Shared by the form (instant feedback) and the API route (the client is never trusted). */
+/** Shared by the form (instant feedback) and any external form handler (the client is never trusted). */
 export function validateContact(input: unknown): ContactValidation {
   const raw = typeof input === 'object' && input !== null ? (input as Record<string, unknown>) : {};
 

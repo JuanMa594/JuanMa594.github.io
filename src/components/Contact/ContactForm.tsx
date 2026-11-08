@@ -12,6 +12,10 @@ import { Toast, type ToastMessage } from './Toast';
 
 const EMPTY_FORM: ContactPayload = { name: '', email: '', message: '', website: '' };
 
+// Public Formspree form endpoint, inlined at build time. Create one at https://formspree.io
+// and set NEXT_PUBLIC_CONTACT_FORM_ENDPOINT (locally and as a GitHub Actions repository variable).
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT?.trim();
+
 type FieldErrors = Partial<Record<ContactField, string>>;
 
 const inputClasses =
@@ -47,12 +51,25 @@ export function ContactForm() {
       return;
     }
 
+    if (!CONTACT_ENDPOINT) {
+      setToast({ type: 'error', message: t.contact.errors.unavailable });
+      return;
+    }
+
     setIsSending(true);
     try {
-      const response = await fetch('/api/contact', {
+      const { name, email, message, website } = result.data;
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(result.data),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: `Portfolio contact — ${name}`,
+          // Formspree's built-in honeypot field; our visitor-facing field is `website`.
+          _gotcha: website,
+        }),
       });
       const body = (await response.json().catch(() => null)) as { ok: boolean } | null;
 

@@ -1,14 +1,14 @@
 # Portfolio
 
-This project is a modern personal portfolio website built with Next.js, React, TypeScript, and Tailwind CSS. It showcases the developer's work, experience, skills, and contact information in a polished, responsive interface.
+This project is a modern personal portfolio website built with Next.js, React, TypeScript, and Tailwind CSS. It showcases the developer's work, experience, skills, and contact information in a polished, responsive interface. It is exported as a static site and deployed to GitHub Pages.
 
 ## Features
 
 - Responsive layout for desktop and mobile
 - Sections for projects, experience, skills, and contact
 - Manual EN/ES language switcher with `localStorage` persistence and full content localization
-- Fast rendering and modern UI with Next.js
-- Easy deployment to Vercel or other Node.js-compatible hosting platforms
+- Fast static rendering with Next.js static export (`output: 'export'`)
+- Automated deployment to GitHub Pages through GitHub Actions
 
 ## Localization
 
@@ -28,7 +28,7 @@ English is the default language. The header's `EN` / `ES` toggle updates the int
 
 2. Run the development server:
    ```bash
-  bun run dev
+   bun run dev
    ```
 
 3. Open the app in your browser:
@@ -38,48 +38,46 @@ English is the default language. The header's `EN` / `ES` toggle updates the int
 
 ## Production build
 
-To prepare the app for deployment:
+GitHub Pages cannot run a Node.js server, so the project builds to static files in `out/`:
 
 ```bash
 bun run build
 ```
 
-To start the production server locally:
+To preview the exported site locally:
 
 ```bash
-bun run start
+bun run preview
 ```
-For architecture and feature development, check the /spec folder.
+
+`next start` is not available with static export. Serve the `out/` folder with any static file server instead.
+
+For architecture and feature development, check the `/spec` folder.
 
 ## Environment variables
 
-The contact form (`POST /api/contact`) sends email through [Resend](https://resend.com). Copy `.env.example` to `.env.local` and fill in:
+The contact form posts to a [Formspree](https://formspree.io) form endpoint. Create a form in Formspree, then copy `.env.example` to `.env.local` and set:
 
 | Variable | Purpose |
 |---|---|
-| `RESEND_API_KEY` | Resend API key (server-only) |
-| `CONTACT_TO_EMAIL` | Inbox that receives the messages |
-| `CONTACT_FROM_EMAIL` | Sender address (`onboarding@resend.dev` until a domain is verified) |
-| `SITE_URL` | Production origin allowed to call the endpoint, no trailing slash |
+| `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` | Public Formspree endpoint, e.g. `https://formspree.io/f/xxxxxxxx` |
 
-Set the same variables in the Vercel dashboard for production.
+The value is public by design: it is inlined into the static bundle at build time and is visible in the browser. No private API key is needed or shipped. If the variable is missing, the form shows a localized "contact form unavailable" message while the direct email link still works.
 
-## Deploying the project
+Set the same value as a **repository variable** in GitHub (`Settings > Secrets and variables > Actions > Variables`) so the GitHub Actions build can inline it. The value is not a secret.
 
-### Vercel
+## Deploying to GitHub Pages
 
-- Push the repository to GitHub
-- Import the project in Vercel
-- Use the default Next.js build settings
-- Deploy the project
+The workflow in `.github/workflows/deploy.yml` builds the static export and publishes it with GitHub Pages whenever `master` is pushed (it can also be run manually with `workflow_dispatch`).
 
-### Other hosting platforms
+1. **User page URL:** rename the repository to `JuanMa594.github.io` so the site is served at `https://juanma594.github.io/`. A project repository (`portfolio`) would be served under `/portfolio/` and require `basePath`/`assetPrefix` in `next.config.mjs`; the current config assumes the root URL.
+2. In GitHub, open **Settings > Pages** and set **Build and deployment > Source** to **GitHub Actions**.
+3. In **Settings > Secrets and variables > Actions > Variables**, add `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` with the Formspree endpoint.
+4. Push to `master` (or run the workflow manually). The `build` job generates `out/` and the `deploy` job publishes it.
+5. Open `https://juanma594.github.io/` and verify styles, images, animations, anchors (`#about`, `#projects`, `#skills`, `#exp`/`#experience`, `#contact`), the EN/ES switcher and the CV downloads.
 
-- Build the app with `bun run build`
-- Start it with `bun run start`
-- Make sure the host supports Node.js applications
+`public/.nojekyll` is copied into the export so GitHub Pages serves the generated asset folders as-is.
 
 ## Security note
 
-Keep any API keys or sensitive values in environment variables and never commit them to the repository.
-
+Keep any sensitive values in environment variables or CI secrets and never commit them to the repository. Only public, `NEXT_PUBLIC_*` values belong in the static bundle.
