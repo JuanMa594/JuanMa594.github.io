@@ -5,7 +5,7 @@ import './globals.css';
  
 
 export const metadata: Metadata = {
-  title: "JuanMa594 - Software & Automation Developer Portfolio",
+  title: "JuanMa594 - Software, Automation & AI Developer Portfolio",
   description: "Personal portfolio of JuanMa594, showcasing GitHub projects, experience, and skills. Built with React, TypeScript, and Tailwind CSS.",
   // Browser translation tools can rewrite nodes and break custom animations; the site ships its own EN/ES toggle.
   other: { google: 'notranslate' },
