@@ -1,0 +1,149 @@
+import type { Localized } from '../types/i18n';
+
+export interface Collaborator {
+  /** Display name, usually the GitHub handle. */
+  name: string;
+  /** Public GitHub profile. */
+  url: string;
+}
+
+export interface ProjectEntry {
+  /** Stable id: keys PROJECT_MEDIA and PROJECT_ICONS. */
+  slug: string;
+  name: string;
+  description: Localized<string>;
+  /** GitHub repo name, used to enrich the card with live stars/forks. Null when the repo is private. */
+  repo: string | null;
+  githubUrl: string | null;
+  liveUrl: string | null;
+  /** Keys of TECH_META: languages first, then frameworks, libraries and tools. */
+  techKeys: string[];
+  /** People who built the project alongside the owner, linked from the card. */
+  collaborators?: Collaborator[];
+}
+
+/**
+ * Hand-curated list of the projects shown in the Projects grid, in display order.
+ * Everything but stars/forks comes from here; see getFeaturedProjects for the live part.
+ */
+export const PROJECTS: ProjectEntry[] = [
+  {
+    slug: 'Kyoto-website',
+    name: 'Kyoto Website',
+    description: {
+      en: 'Immersive, scroll-driven 3D website about Kyoto, built with React Three Fiber, hand-written GLSL shaders and GSAP, with a synthesized Web Audio soundscape and multi-language support.',
+      es: 'Sitio web 3D inmersivo sobre Kioto, con desplazamiento narrativo, construido con React Three Fiber, shaders GLSL escritos a mano y GSAP, con una banda sonora sintetizada mediante Web Audio y soporte multilingüe.',
+    },
+    repo: 'Kyoto-website',
+    githubUrl: 'https://github.com/JuanMa594/kyoto-website',
+    liveUrl: 'https://drive.google.com/file/d/1GUjD0VgY5GyIGMzNRqeghz9XwDM7UPPm/view?usp=sharing',
+    techKeys: [
+      'typescript',
+      'nextjs',
+      'react',
+      'threejs',
+      'r3f',
+      'glsl',
+      'gsap',
+      'zustand',
+      'nextintl',
+      'tailwindcss',
+      'bun',
+    ],
+    collaborators: [
+      { name: 'claude', url: 'https://github.com/claude' },
+    ],
+  },
+  {
+    slug: 'Streaming',
+    name: 'Streaming',
+    description: {
+      en: 'Music streaming app with search, library, playlists, listening statistics and themes, built as a Bun monorepo with a React + Vite frontend and a Hono + SQLite backend.',
+      es: 'Aplicación de streaming de música con búsqueda, biblioteca, listas de reproducción, estadísticas de escucha y temas, construida como un monorepo de Bun con frontend React + Vite y backend Hono + SQLite.',
+    },
+    repo: null,
+    githubUrl: null,
+    liveUrl: 'https://drive.google.com/file/d/1gEJUfnWkqaqBJrUvk1XL6ENERBkx5n3H/view?usp=sharing',
+    techKeys: [
+      'typescript',
+      'bun',
+      'react',
+      'vite',
+      'tailwindcss',
+      'tanstackrouter',
+      'tanstackquery',
+      'zustand',
+      'radixui',
+      'lucide',
+      'hono',
+      'zod',
+      'drizzle',
+      'sqlite',
+    ],
+  },
+  {
+    slug: 'FutStats',
+    name: 'FutStats',
+    description: {
+      en: 'A multi-league sports app (scores, standings, rosters, and leaders) built using the Free API Live Football Data on RapidAPI, which is a wrapper for FotMob.',
+      es: 'Aplicación deportiva de varias ligas (resultados, clasificaciones, plantillas y líderes) construida con la API gratuita Live Football Data de RapidAPI, que es un wrapper de FotMob.',
+    },
+    repo: 'mundial-app',
+    githubUrl: 'https://github.com/JuanMa594/mundial-app',
+    liveUrl: null,
+    techKeys: ['typescript', 'nextjs', 'react', 'tailwindcss', 'tanstackquery', 'bun'],
+  },
+  {
+    slug: 'Hospital-JM-',
+    name: 'Hospital-JM',
+    description: {
+      en: 'API and frontend for comprehensive medication inventory management, with a focus on traceability, stock/expiration alerts, and clean architecture.',
+      es: 'API y frontend para la gestión integral del inventario de medicamentos, con enfoque en trazabilidad, alertas de stock y caducidad, y arquitectura limpia.',
+    },
+    repo: 'Hospital-JM-',
+    githubUrl: 'https://github.com/JuanMa594/Hospital-JM-',
+    //liveUrl: 'https://hospital-jm.vercel.app',
+    liveUrl: null,
+    techKeys: ['python', 'csharp', 'blazor', 'html', 'css'],
+  },
+  {
+    slug: 'Vulnerabilidades_MalasPracticasFrecuentes',
+    name: 'Common Vulnerabilities',
+    description: {
+      en: 'A collaborative educational project designed to learn, using a sample application, how certain common programming vulnerabilities and errors manifest themselves and how to prevent them.',
+      es: 'Proyecto educativo colaborativo para aprender, con una aplicación de ejemplo, cómo se manifiestan algunas vulnerabilidades y errores comunes de programación y cómo prevenirlos.',
+    },
+    repo: 'Vulnerabilidades_MalasPracticasFrecuentes',
+    githubUrl: 'https://github.com/JuanMa594/Vulnerabilidades_MalasPracticasFrecuentes',
+    liveUrl: null,
+    techKeys: ['python', 'flask', 'postgresql', 'html', 'css', 'javascript', 'docker', 'uv'],
+    collaborators: [
+      { name: 'Navarrojuan212', url: 'https://github.com/Navarrojuan212' },
+      { name: 'claude', url: 'https://github.com/claude' },
+    ],
+  },
+  {
+    slug: 'ProyectoRickYMorty',
+    name: 'ProyectoRickYMorty',
+    description: {
+      en: 'This project is an interactive web application developed in Blazor .NET 10 that uses the Rick and Morty API to display information about the characters from the series. The application allows users to explore characters, filter them by different criteria, and vote using a "like/dislike" system.',
+      es: 'Este proyecto es una aplicación web interactiva desarrollada en Blazor .NET 10 que usa la API de Rick and Morty para mostrar información sobre los personajes de la serie. La aplicación permite explorar personajes, filtrarlos por distintos criterios y votar mediante un sistema de "me gusta/no me gusta".',
+    },
+    repo: 'ProyectoRickYMorty',
+    githubUrl: 'https://github.com/JuanMa594/ProyectoRickYMorty',
+    liveUrl: null,
+    techKeys: ['csharp', 'html', 'blazor', 'net', 'bootstrap'],
+  },
+  {
+    slug: 'LaHuesera',
+    name: 'La Huesera',
+    description: {
+      en: 'ASP.NET web application for managing data from the "La Huesera" application using a data model generated with Entity Framework.',
+      es: 'Aplicación web ASP.NET para gestionar los datos de la aplicación "La Huesera" usando un modelo de datos generado con Entity Framework.',
+    },
+    repo: 'LaHuesera',
+    githubUrl: 'https://github.com/JuanMa594/LaHuesera',
+    liveUrl: null,
+    techKeys: ['csharp', 'javascript', 'html', 'css', 'net', 'entityframework', 'bootstrap', 'jquery', 'nuget'],
+  },
+];

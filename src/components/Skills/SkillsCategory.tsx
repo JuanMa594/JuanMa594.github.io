@@ -1,0 +1,23 @@
+import type { SkillCategory } from '../../data/skills';
+import { SkillItem } from './SkillItem';
+
+interface SkillsCategoryProps {
+  category: SkillCategory;
+  /** Already resolved for the active language. */
+  title: string;
+}
+
+export function SkillsCategory({ category, title }: SkillsCategoryProps) {
+  return (
+    <div>
+      <h3 className="font-mono text-sm uppercase tracking-wide text-accent">{title}</h3>
+      <div className="mt-3 h-px w-full bg-border" />
+
+      <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 md:grid-cols-6">
+        {category.keys.map((key) => (
+          <SkillItem key={key} techKey={key} />
+        ))}
+      </div>
+    </div>
+  );
+}
