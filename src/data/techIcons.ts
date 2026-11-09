@@ -38,6 +38,7 @@ import {
   SiUv,
   SiVercel,
   SiVite,
+  SiWarp,  
   SiZod,
   SiBun,
 } from 'react-icons/si';
@@ -128,6 +129,7 @@ export const TECH_META: Record<string, TechMeta> = {
   bun: { label: 'Bun', icon: SiBun },
   uv: { label: 'uv', icon: SiUv },
   vscode: { label: 'VS Code', icon: VscVscodeInsiders },
+  warp: {label: 'Warp Terminal', icon: SiWarp},  
   sqlserver: { label: 'SQL Server', icon: DiMsqlServer },
   postgresql: { label: 'PostgreSQL', icon: SiPostgresql },
   vercel: { label: 'Vercel', icon: SiVercel },

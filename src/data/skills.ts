@@ -49,6 +49,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       'github',
       'bun',
       'vscode',
+      'warp',      
       'sqlserver',
       'postgresql',
       'vercel',
