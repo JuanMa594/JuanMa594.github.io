@@ -1,6 +1,6 @@
 # Portfolio
 
-This project is a modern personal portfolio website built with Next.js, React, TypeScript, and Tailwind CSS. It showcases the developer's work, experience, skills, and contact information in a polished, responsive interface.
+This project is my modern personal portfolio website built with Next.js, React, TypeScript, and Tailwind CSS. It showcases my work, experience, skills, and contact information in a polished, responsive interface.
 
 ## Features
 
