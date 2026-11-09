@@ -89,6 +89,7 @@ export const en = {
       rateLimited: 'Too many messages. Please try again in a few minutes.',
       forbidden: 'This request is not allowed from this site.',
       invalidRequest: 'Invalid request. Please check your message and try again.',
+      unavailable: "The contact form isn't available right now. Please email me directly instead.",
     },
     success: "Message sent! I'll get back to you soon.",
   },

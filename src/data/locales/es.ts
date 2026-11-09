@@ -86,6 +86,7 @@ export const es: Translation = {
       rateLimited: 'Demasiados mensajes. Inténtalo de nuevo en unos minutos.',
       forbidden: 'Esta solicitud no está permitida desde este sitio.',
       invalidRequest: 'Solicitud no válida. Revisa tu mensaje e inténtalo de nuevo.',
+      unavailable: 'El formulario de contacto no está disponible ahora mismo. Escríbeme directamente por correo.',
     },
     success: '¡Mensaje enviado! Te responderé pronto.',
   },

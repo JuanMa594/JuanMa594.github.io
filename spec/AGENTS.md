@@ -1,7 +1,7 @@
 # Portfolio — Specification
 
 ## Overview
-Personal developer portfolio for JuanMa594, showcasing GitHub projects, experience, and skills. Built with React + TypeScript and deployed on Vercel. English is the default language; Spanish is available through the manual EN/ES switcher.
+Personal developer portfolio for JuanMa594, showcasing GitHub projects, experience, and skills. Built with Next.js + TypeScript, exported as a static site and deployed on GitHub Pages. English is the default language; Spanish is available through the manual EN/ES switcher.
 
 ---
 
@@ -12,9 +12,9 @@ Personal developer portfolio for JuanMa594, showcasing GitHub projects, experien
 | Framework   | Next JS                       |
 | Language    | TypeScript (primary) + JS     |
 | Styling     | Tailwind CSS                  |
-| Data source | GitHub REST API v3 (public)   |
-| Hosting     | Vercel                        |
-| Build tool  | Vite                          |
+| Data source | GitHub REST API v3 (public, fetched at build) |
+| Hosting     | GitHub Pages (static export)  |
+| Build tool  | Bun + Next.js                 |
 
 ---
 
@@ -53,15 +53,15 @@ Personal developer portfolio for JuanMa594, showcasing GitHub projects, experien
 
 ### 4. Contact
 - Simple form: name, email, message
-- Submission via a serverless function (Vercel Function) or third-party service (e.g. Resend, EmailJS)
+- Submission via a third-party form service (Formspree), required because the site is statically exported
 
 ---
 
 ## GitHub API Integration
 
 - Endpoint: `https://api.github.com/users/JuanMa594/repos?per_page=100&sort=updated`
-- Auth: optional GitHub token via environment variable (`VITE_GITHUB_TOKEN`) to raise rate limit from 60 to 5000 req/hr
-- Data fetched once on page load, cached in component state
+- Auth: none by default; the public repos endpoint is fetched at build time (60 req/hr unauthenticated)
+- Data fetched once per build and prerendered into the static HTML
 - Fields used: `name`, `description`, `html_url`, `language`, `stargazers_count`, `topics`, `fork`
 
 ---
@@ -128,7 +128,10 @@ portfolio
 │    │       ├── en.ts            # English UI copy dictionary
 │    │       ├── es.ts            # Spanish UI copy dictionary
 │    │       └── index.ts         # DICTIONARIES lookup
-│    ├── app/api/contact/route.ts  # Next.js Route Handler: submits the contact form via Resend
+│    ├── lib/
+│    │    ├── github.ts            # build-time GitHub metadata fetch
+│    │    └── contactValidation.ts # shared contact-form validation (posts to Formspree)
+│    ├── app/                      # App Router: layout.tsx, page.tsx, globals.css
 │    ├── App.tsx
 │    └── main.tsx
 │
@@ -187,9 +190,11 @@ Keynote: Constitution rules; so if a feature compete with `mission.md` or `tech-
 
 ## Deployment
 
-- Platform: Vercel
-- Trigger: push to `main` branch auto-deploys
-- Environment variable: `VITE_GITHUB_TOKEN` set in Vercel dashboard
+- Platform: GitHub Pages, served from the static `out/` export (`output: 'export'`)
+- Trigger: push to `master` auto-deploys through `.github/workflows/deploy.yml` (or manual `workflow_dispatch`)
+- URL: user page at `https://juanma594.github.io/` (repository must be named `JuanMa594.github.io`; a project repo would need `basePath`)
+- Repository variable: `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` (public Formspree endpoint) set in Settings > Secrets and variables > Actions > Variables
+- Contact form: Formspree; there is no Next.js API route because static export cannot run route handlers
 
 ---
 
@@ -203,5 +208,6 @@ Keynote: Constitution rules; so if a feature compete with `mission.md` or `tech-
 
 ## Pending
 
-Nothing pending: Contact, CV download, Experience & Education and the EN/ES language switcher shipped in features 004, 005 and 005.5.
+- **006 · Deployment:** code, static export and workflow are complete. Pending: rename the repo to `JuanMa594.github.io`, enable Pages with source "GitHub Actions", set the `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` repository variable, and push `master` for live validation.
+- Contact, CV download, Experience & Education and the EN/ES language switcher shipped in features 004, 005 and 005.5.
 

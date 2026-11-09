@@ -1,6 +1,6 @@
 # Mission
 
-Personal developer portfolio for JuanMa594, showcasing GitHub projects, experience, and skills. Built with React + TypeScript and deployed on Vercel.
+Personal developer portfolio for JuanMa594, showcasing GitHub projects, experience, and skills. Built with Next.js + TypeScript, exported as a static site and deployed on GitHub Pages.
 
 ## What We Built
 
@@ -10,7 +10,7 @@ _Key product features:_
 
 1. **Project Showcase** — Uses the GitHub API to display public repositories, filterable by language and topic; excludes forks by default.
 2. **Professional Profile** — Static sections for work experience (company, role, dates, responsibilities) and skills grouped by category.
-3. **Contact Form** — A form (name, email, message) submitted via a serverless function on Vercel.
+3. **Contact Form** — A form (name, email, message) submitted through a Formspree endpoint from the static site.
 4. **Interactive Terminal** — A CLI-style command bar in the hero section with real section navigation (`-info` summaries or scroll-to on commands like `/about`, `/skills`, `/exp`), and a set of personality/easter-egg commands (logo + font swap chain via `/pixel`/`/serif`/`/reset`, blue-shade accent cycling via `/accent`, `/matrix`, `/quote`, `/coffee`, `/whoami`, `/contact`, `/sudo`) that give the site a distinct developer-tool identity.
 5. **About Me Section** — A personal introduction below the hero (`#about`): a profile card with bio and photo, plus a hover/tap photo gallery of personal interests, giving visitors a sense of who's behind the portfolio beyond the resume facts.
 6. **Language Switcher** — A compact `EN` / `ES` toggle in the header next to the theme button. English remains the default; the choice persists in `localStorage`, updates the document language and translates the interface plus section content instantly. Browser translation tools are disabled on the root document so they cannot rewrite the animated DOM.

@@ -3,12 +3,12 @@
 ## Technologies
 
 - **Language:** TypeScript (primary) + JS
-- **Framework / runtime:** Next JS
+- **Framework / runtime:** Next.js (static export, `output: 'export'`)
 - **Styling:** Tailwind CSS
-- **Data Source:** GitHub REST API v3 (public)
+- **Data Source:** GitHub REST API v3 (public, fetched at build time)
 - **Tests:** Vitest
-- **Build tool:** Vite
-- **Hosting:** Vercel
+- **Build tool:** Bun + Next.js
+- **Hosting:** GitHub Pages (static site, deployed by GitHub Actions)
 
 ### Libraries
 Install if it´s not yet
@@ -43,7 +43,7 @@ src/
 │       ├── en.ts            # English UI copy dictionary
 │       ├── es.ts            # Spanish UI copy dictionary
 │       └── index.ts         # DICTIONARIES lookup
-└── app/api/contact/route.ts # Next.js Route Handler: contact form via Resend
+└── lib/contactValidation.ts # shared contact-form validation (posts to Formspree)
 ```
 
 ## Commands
@@ -52,7 +52,8 @@ src/
 - `bun add ` — adds a package to the project
 - `bun run test` — runs Vitest tests.
 - `bun run lint` — checks code style with ESLint.
-- `bun build` — compiles for production.
+- `bun run build` — builds the static export into `out/`.
+- `bun run preview` — serves `out/` locally.
 - `bun install` — install dependencies
 
 ## Data Models / Domains
@@ -67,7 +68,7 @@ src/
 
 - **Naming:** `camelCase` for functions and variables; `PascalCase` for React/TypeScript/Next components and types.
 - **Tests:** Create a `tests/` folder at the root if it doesn't exist; all test files go there.
-- **Environments:** Split dev / staging / prod via Vite's `import.meta.env`.
+- **Environments:** Split dev / prod with Next.js `process.env`; only `NEXT_PUBLIC_*` values are inlined into the static bundle.
 - **Config:** Secure by default — defense in depth; sensitive values only in `.env`.
 - **Security:** Prevent XSS (no `dangerouslySetInnerHTML` with untrusted data), no command injection.
 - **Typing:** All data structures typed with TypeScript interfaces/types — no `any`.
@@ -86,9 +87,9 @@ src/
 ## Harsh Limits
 
 - **No dependencies without notice** — never install a library without informing the developer first.
-- **No secrets in repo** — `VITE_GITHUB_TOKEN` and any other sensitive value lives only in `.env*` files, which are git-ignored.
+- **No secrets in repo** — API keys or tokens used at build time live only in `.env*` files or CI secrets; the static bundle contains only public `NEXT_PUBLIC_*` values.
 - **No `.env*` committed** — `.env`, `.env.local`, `.env.production` must be in `.gitignore`.
-- **No anonymous access to sensitive endpoints** — serverless contact function must validate origin/rate-limit.
+- **No sensitive values in the browser** — the static site keeps contact validation client-side and delegates delivery to the public Formspree endpoint; no API keys ship to the client.
 - **Structured logs only** — no `console.log` with sensitive data in production builds.
 - **Hide sensitive data on errors** — catch blocks must not expose tokens, emails, or stack traces to the UI.
 - **No arbitrary command execution** — no `eval`, no `exec` of user-supplied strings.

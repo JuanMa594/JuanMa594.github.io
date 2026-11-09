@@ -13,6 +13,8 @@ export function ExperienceEducationSection() {
 
   return (
     <section id="exp" className="bg-[#0B0F19] px-5 py-24 text-ink transition-colors [:root.light_&]:bg-[#FFF5EB]">
+      {/* Alias anchor so the documented `#experience` deep link also lands on this section. */}
+      <span id="experience" aria-hidden className="block h-0" />
       <div className="mx-auto max-w-5xl">
         <h2 className="text-3xl font-semibold sm:text-4xl">{t.experience.title}</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-muted sm:text-lg">
